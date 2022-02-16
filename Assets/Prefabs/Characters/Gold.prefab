@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  PPU: 16
 --- !u!50 &1816895949313558765
 Rigidbody2D:
   serializedVersion: 4

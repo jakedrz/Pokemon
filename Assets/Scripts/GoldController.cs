@@ -9,9 +9,12 @@ public class GoldController : MonoBehaviour
     Rigidbody2D rigidBody;
     enum Direction {Up, Right, Down, Left};
     Direction lastDirection, currentDirection;
+    Vector2 lastPosition;
     string stringDirection;
+    bool isMoving;
 
     public float speed;
+    public float PPU;
 
     // Start is called before the first frame update
     void Start()
@@ -30,23 +33,40 @@ public class GoldController : MonoBehaviour
         {
             switch(lastDirection)
             {
-                //TODO: Finish grid movement
                 case Direction.Up:
-                    Debug.Log(Mathf.Ceil(position.y) + " " + position.y + " " + Mathf.Approximately(Mathf.Ceil(position.y), position.y));
-                    if(Mathf.Ceil(position.y) > position.y)
+                    if(Mathf.Ceil(lastPosition.y) > (position.y + 1f / (PPU * 2)))
                         input.y = 1;
+                    else
+                        input.y = 0;
+                        rigidBody.MovePosition(new Vector2(position.x, position.y + 1f / (PPU)));
                     break;
                 case Direction.Right:
+                    if(Mathf.Ceil(lastPosition.x) > (position.x + 1f / (PPU * 2)))
+                        input.x = 1;
+                    else
+                        input.x = 0;
+                        rigidBody.MovePosition(new Vector2(position.x + 1f / (PPU), position.y));
                     break;
                 case Direction.Down:
+                    if(Mathf.Floor(lastPosition.y) < (position.y - 1f / (PPU * 2)))
+                        input.y = -1;
+                    else
+                        input.y = 0;
+                        rigidBody.MovePosition(new Vector2(position.x, position.y - 1f / (PPU)));
                     break;
                 default:
+                    if(Mathf.Floor(lastPosition.x) < position.x - 1f / (PPU * 2))
+                        input.x = -1;
+                    else
+                        input.x = 0;
+                        rigidBody.MovePosition(new Vector2(position.x - 1f / (PPU), position.y));
                     break;
             }
         }
         else
         {
             lastDirection = currentDirection;
+            lastPosition = position;
         }
         Vector2 move = new Vector2(position.x + input.x * speed * Time.deltaTime, position.y + input.y * speed * Time.deltaTime);
         rigidBody.MovePosition(move);
