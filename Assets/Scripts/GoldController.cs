@@ -20,25 +20,17 @@ public class GoldController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // FixedUpdate is called regularly, regardless of frame
     void FixedUpdate()
     {
         Vector2 position = rigidBody.position;
-        // horizontal = Input.GetAxis("Horizontal");
-        // vertical = Input.GetAxis("Vertical");
-        // Vector2 input = new Vector2(horizontal, vertical);
         Vector2 input;
         currentDirection = GetDirectionInput(out input);
         if(Mathf.Approximately(input.magnitude, 0))
         {
-            
             switch(lastDirection)
             {
+                //TODO: Finish grid movement
                 case Direction.Up:
                     Debug.Log(Mathf.Ceil(position.y) + " " + position.y + " " + Mathf.Approximately(Mathf.Ceil(position.y), position.y));
                     if(Mathf.Ceil(position.y) > position.y)
@@ -61,8 +53,6 @@ public class GoldController : MonoBehaviour
 
         move.Normalize();
 
-        
-
         bool isMoving = (Mathf.Approximately(input.magnitude, 0)) ? false : true;
         if(isMoving)
         {
@@ -74,7 +64,6 @@ public class GoldController : MonoBehaviour
         {
             animator.SetBool("Moving", isMoving);
         }
-        
     }
 
     Direction GetDirectionInput(out Vector2 input)
@@ -85,22 +74,25 @@ public class GoldController : MonoBehaviour
         input = new Vector2(horizontal, vertical);
         float angle = Vector2.SignedAngle(Vector2.up, input);
         if((45f <= angle) && (angle < 135f))
-            {direction = Direction.Left;
-            input.y = 0;}
+        {
+            direction = Direction.Left;
+            input.y = 0;
+        }
         else if((135f <= angle) && (angle > -135f))
-            {direction = Direction.Down;
-            input.x = 0;}
+        {
+            direction = Direction.Down;
+            input.x = 0;
+        }
         else if((-135f <= angle) && (angle < -45f))
-            {direction = Direction.Right;
-            input.y = 0;}
+        {
+            direction = Direction.Right;
+            input.y = 0;
+        }
         else
-            {direction = Direction.Up;
-            input.x = 0;}
-        
+        {
+            direction = Direction.Up;
+            input.x = 0;
+        }
         return direction;
-
-        
-
-
     }
 }
