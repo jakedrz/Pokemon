@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6223954055361016223}
+  - component: {fileID: 737594737535413615}
   - component: {fileID: 6223954055361016220}
   - component: {fileID: 6223954055361016222}
   - component: {fileID: 8119730063849704501}
   - component: {fileID: 981247232618721501}
-  - component: {fileID: 737594737535413615}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -35,6 +35,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &737594737535413615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6223954055361016221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1252c64ed0d594348a1167a03f4f22d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 1
+  wander: 0
+  stride: 0
+  speed: 3
+  pauseMinimum: 0
+  pauseMaximum: 0
 --- !u!212 &6223954055361016220
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -139,7 +157,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6223954055361016221}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -151,26 +169,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &737594737535413615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6223954055361016221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1252c64ed0d594348a1167a03f4f22d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  down1: {fileID: -1516978620309819490, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  down2: {fileID: -7521530218286370748, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  down3: {fileID: 215033841269126694, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  up1: {fileID: 3194653528893622819, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  up2: {fileID: 8235194700352706529, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  up3: {fileID: -4409618599465418411, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  left1: {fileID: -4813030694374590828, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  left2: {fileID: -8369524800344633426, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  right1: {fileID: -692535684765136150, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
-  right2: {fileID: 3840067811381540078, guid: 9f80f92a507a0ae4aaee4424d0108ce1, type: 3}
+  m_Constraints: 4
