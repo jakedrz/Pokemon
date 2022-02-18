@@ -5573,13 +5573,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 981247232618721501, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
-      propertyPath: m_BodyType
+    - target: {fileID: 737594737535413615, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: stride
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 737594737535413615, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: wander
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 981247232618721501, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
-      propertyPath: m_Constraints
-      value: 4
+    - target: {fileID: 737594737535413615, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: direction
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 737594737535413615, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: pauseMaximum
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 737594737535413615, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: pauseMinimum
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_Name

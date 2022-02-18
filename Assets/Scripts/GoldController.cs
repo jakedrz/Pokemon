@@ -6,27 +6,27 @@ public class GoldController : MonoBehaviour
 {
     Animator animator;
     float horizontal, vertical;
-    Rigidbody2D rigidBody;
+    Rigidbody2D rigidbody;
     enum Direction {Up, Right, Down, Left};
     Direction lastDirection, currentDirection;
     Vector2 lastPosition;
     string stringDirection;
     bool isMoving;
 
-    public float speed;
+    public float speed = 3f;
     public float PPU;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        rigidBody = GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     // FixedUpdate is called regularly, regardless of frame
     void FixedUpdate()
     {
-        Vector2 position = rigidBody.position;
+        Vector2 position = rigidbody.position;
         Vector2 input;
         currentDirection = GetDirectionInput(out input);
         if(Mathf.Approximately(input.magnitude, 0))
@@ -38,28 +38,28 @@ public class GoldController : MonoBehaviour
                         input.y = 1;
                     else
                         input.y = 0;
-                        rigidBody.MovePosition(new Vector2(position.x, position.y + 1f / (PPU)));
+                        rigidbody.MovePosition(new Vector2(position.x, position.y + 1f / (PPU)));
                     break;
                 case Direction.Right:
                     if(Mathf.Ceil(lastPosition.x) > (position.x + 1f / (PPU * 2)))
                         input.x = 1;
                     else
                         input.x = 0;
-                        rigidBody.MovePosition(new Vector2(position.x + 1f / (PPU), position.y));
+                        rigidbody.MovePosition(new Vector2(position.x + 1f / (PPU), position.y));
                     break;
                 case Direction.Down:
                     if(Mathf.Floor(lastPosition.y) < (position.y - 1f / (PPU * 2)))
                         input.y = -1;
                     else
                         input.y = 0;
-                        rigidBody.MovePosition(new Vector2(position.x, position.y - 1f / (PPU)));
+                        rigidbody.MovePosition(new Vector2(position.x, position.y - 1f / (PPU)));
                     break;
                 default:
                     if(Mathf.Floor(lastPosition.x) < position.x - 1f / (PPU * 2))
                         input.x = -1;
                     else
                         input.x = 0;
-                        rigidBody.MovePosition(new Vector2(position.x - 1f / (PPU), position.y));
+                        rigidbody.MovePosition(new Vector2(position.x - 1f / (PPU), position.y));
                     break;
             }
         }
@@ -69,7 +69,7 @@ public class GoldController : MonoBehaviour
             lastPosition = position;
         }
         Vector2 move = new Vector2(position.x + input.x * speed * Time.deltaTime, position.y + input.y * speed * Time.deltaTime);
-        rigidBody.MovePosition(move);
+        rigidbody.MovePosition(move);
 
         move.Normalize();
 
