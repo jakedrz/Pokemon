@@ -81,6 +81,7 @@ public class NPCController : MonoBehaviour
                     animator.SetBool("Moving", false);
                     lastTime = Time.fixedTime;
                     t = 0;
+                    pauseTime = Random.Range(pauseMinimum, pauseMaximum);
                 }
                 else
                 {
