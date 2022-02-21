@@ -115,4 +115,26 @@ public class GoldController : MonoBehaviour
         }
         return direction;
     }
+
+    public Vector2 position
+    {
+        get
+        {
+            return rigidbody.position;
+        }
+    }
+
+    public bool transient
+    {
+        // TODO: write transient function
+        get
+        {
+            return false;
+        }
+    }
+
+    public void teleport(Vector2 dest)
+    {
+        transform.position = dest;
+    }
 }
