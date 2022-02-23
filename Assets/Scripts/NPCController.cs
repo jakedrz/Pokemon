@@ -125,4 +125,12 @@ public class NPCController : MonoBehaviour
         animator.SetBool("Moving", true);
         animator.SetBool("Moving", false);
     }
+
+    public Vector2 position
+    {
+        get
+        {
+            return rigidbody.position;
+        }
+    }
 }
