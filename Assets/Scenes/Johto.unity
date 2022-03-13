@@ -29537,9 +29537,17 @@ PrefabInstance:
       propertyPath: pauseMinimum
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6223954055361016220, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_Name
       value: Motherly
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6223954055361016223, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_RootOrder

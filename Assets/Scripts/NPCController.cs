@@ -74,7 +74,6 @@ public class NPCController : MonoBehaviour
                     velY = -(rigidbody.position - origin).normalized.y;
                 }
                 animator.SetBool("Moving", true);
-                Debug.Log("vel x" + rigidbody.velocity.normalized.x);
                 if(t >= 1)
                 {
                     moving = false;
