@@ -39,17 +39,22 @@ public class GoldController : MonoBehaviour
     {
         Vector2 input;
         currentDirection = GetDirectionInput(out input);
-        //if inpu
+        //if input
         if (!Mathf.Approximately(input.magnitude, 0))
         {
-            
+            Vector2 toPosition = new Vector2(position.x + input.x, position.y + input.y);
+            StartCoroutine(Move(toPosition))
         }
-        //if input
+        //if no input
         else
         {
             lastDirection = currentDirection;
             lastPosition = position;
         }
+    }
+
+    IEnumerator Move(Vector2 toPosition)
+    {
         Vector2 move = new Vector2(
             position.x + input.x * speed * Time.deltaTime,
             position.y + input.y * speed * Time.deltaTime
@@ -69,10 +74,6 @@ public class GoldController : MonoBehaviour
         {
             animator.SetBool("Moving", isMoving);
         }
-    }
-
-    IEnumerator Move()
-    {
         switch (lastDirection)
         {
             case Direction.Up:
