@@ -21,7 +21,7 @@ public class GoldController : MonoBehaviour
         currentDirection;
     Vector2 lastPosition;
     string stringDirection;
-    bool isMoving;
+    bool isMoving = false;
     Vector2 directionConstrainer;
 
     public float speed = 3f;
@@ -40,81 +40,79 @@ public class GoldController : MonoBehaviour
         Vector2 input;
         currentDirection = GetDirectionInput(out input);
         //if input
-        if (!Mathf.Approximately(input.magnitude, 0))
+        if (!Mathf.Approximately(input.magnitude, 0) && isMoving == false)
         {
+            isMoving = true;
             Vector2 toPosition = new Vector2(position.x + input.x, position.y + input.y);
-            StartCoroutine(Move(toPosition))
-        }
-        //if no input
-        else
-        {
-            lastDirection = currentDirection;
-            lastPosition = position;
+            animator.SetBool("Moving", true);
+            animator.SetFloat("Move X", input.x);
+            animator.SetFloat("Move Y", input.y);
+            Debug.Log("Current position: X: " + position.x + " Y: " + position.y);
+            Debug.Log("To position     : X: " + position.x + input.x + " Y: " + position.y + input.y);
+            StartCoroutine(Move(toPosition));
         }
     }
 
     IEnumerator Move(Vector2 toPosition)
     {
-        Vector2 move = new Vector2(
-            position.x + input.x * speed * Time.deltaTime,
-            position.y + input.y * speed * Time.deltaTime
-        );
-        rigidbody.MovePosition(move);
+        //rigidbody.MovePosition(move);
+        Vector3 toPosition3 = new Vector3(toPosition.x, toPosition.y, 0);
+        while((toPosition3 - transform.position).magnitude > Mathf.Epsilon)
+        {
+            rigidbody.MovePosition(Vector2.MoveTowards(rigidbody.position, toPosition, speed * Time.deltaTime));
+            yield return null;
+        }
+        isMoving = false;
+        Debug.Log("end coroutine");
+        
+        // Vector2 input;
+        // GetDirectionInput(out input);
+        // if(input.magnitude == 0)
+        //     animator.SetBool("Moving", false);
+        
 
-        move.Normalize();
 
-        bool isMoving = (Mathf.Approximately(input.magnitude, 0)) ? false : true;
-        if (isMoving)
-        {
-            animator.SetBool("Moving", isMoving);
-            animator.SetFloat("Move X", input.x);
-            animator.SetFloat("Move Y", input.y);
-        }
-        else
-        {
-            animator.SetBool("Moving", isMoving);
-        }
-        switch (lastDirection)
-        {
-            case Direction.Up:
-                //if dest square is still far away
-                if (Mathf.Ceil(lastPosition.y) > (position.y + 1f / (PPU * 2)))
-                    input.y = 1;
-                //if it's pretty close
-                else
-                {
-                    input.y = 0;
-                    position.y = Mathf.Round(position.y);
-                }
-                break;
-            case Direction.Right:
-                if (Mathf.Ceil(lastPosition.x) > (position.x + 1f / (PPU * 2)))
-                    input.x = 1;
-                else
-                {
-                    input.x = 0;
-                    position.x = Mathf.Round(position.x);
-                }
-                break;
-            case Direction.Down:
-                if (Mathf.Floor(lastPosition.y) < (position.y - 1f / (PPU * 2)))
-                    input.y = -1;
-                else
-                {
-                    input.y = 0;
-                    position.y = Mathf.Round(position.y);
-                }
-                break;
-            default:
-                if (Mathf.Floor(lastPosition.x) < position.x - 1f / (PPU * 2))
-                    input.x = -1;
-                else
-                {
-                    input.x = 0;
-                    position.x = Mathf.Round(position.x);
-                }
-                break;
-        }
+        // switch (lastDirection)
+        // {
+        //     case Direction.Up:
+        //         //if dest square is still far away
+        //         if (Mathf.Ceil(lastPosition.y) > (position.y + 1f / (PPU * 2)))
+        //             input.y = 1;
+        //         //if it's pretty close
+        //         else
+        //         {
+        //             input.y = 0;
+        //             //transform.position.y = Mathf.Round(position.y);
+        //         }
+        //         break;
+        //     case Direction.Right:
+        //         if (Mathf.Ceil(lastPosition.x) > (position.x + 1f / (PPU * 2)))
+        //             input.x = 1;
+        //         else
+        //         {
+        //             input.x = 0;
+        //             //transform.position.x = Mathf.Round(position.x);
+        //         }
+        //         break;
+        //     case Direction.Down:
+        //         if (Mathf.Floor(lastPosition.y) < (position.y - 1f / (PPU * 2)))
+        //             input.y = -1;
+        //         else
+        //         {
+        //             input.y = 0;
+        //             //transform.position.y = Mathf.Round(position.y);
+        //         }
+        //         break;
+        //     default:
+        //         if (Mathf.Floor(lastPosition.x) < position.x - 1f / (PPU * 2))
+        //             input.x = -1;
+        //         else
+        //         {
+        //             input.x = 0;
+        //             //transform.position.x = Mathf.Round(position.x);
+        //         }
+        //         break;
+        // }
     }
 
     Direction GetDirectionInput(out Vector2 input)
@@ -163,8 +161,8 @@ public class GoldController : MonoBehaviour
         transform.position = dest;
     }
 
-    void OnCollisionEnter2D(Collider2D other)
-    {
-        animator.SetBool("Moving", false);
-    }
+    // void OnCollisionEnter2D(Collider2D other)
+    // {
+    //     animator.SetBool("Moving", false);
+    // }
 }
