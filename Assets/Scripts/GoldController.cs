@@ -43,59 +43,61 @@ public class GoldController : MonoBehaviour
         //if input
         if (!Mathf.Approximately(input.magnitude, 0) && isMoving == false)
         {
+            lastPosition = rigidbody.position;
             lastDirection = currentDirection;
             isMoving = true;
-            Vector2 toPosition = new Vector2(
-                rigidbody.position.x + input.x,
-                rigidbody.position.y + input.y
+            Vector2 velocity = new Vector2(
+                input.x,
+                input.y
             );
-            Debug.Log(input.x);
             animator.SetBool("Moving", true);
             animator.SetFloat("Move X", input.x);
             animator.SetFloat("Move Y", input.y);
-            StartCoroutine(Move(toPosition));
+            StartCoroutine(Move(velocity));
         }
+        
     }
 
-    IEnumerator Move(Vector2 toPosition)
+    IEnumerator Move(Vector2 velocity)
     {
         //rigidbody.MovePosition(move);
-        Vector3 toPosition3 = new Vector3(toPosition.x, toPosition.y, 0);
-        while (((toPosition - rigidbody.position).magnitude > Mathf.Epsilon) && collided == false)
+        while (((lastPosition - rigidbody.position).magnitude < 1 - (1f / (PPU * 2))) && collided == false)
         {
             rigidbody.MovePosition(
-                Vector2.MoveTowards(rigidbody.position, toPosition, speed * Time.fixedDeltaTime)
+                //Vector2.MoveTowards(rigidbody.position, toPosition, speed * Time.fixedDeltaTime)
+                rigidbody.position + velocity * speed * Time.fixedDeltaTime
             );
             yield return null;
         }
         //transform.position = toPosition;
         isMoving = false;
-        collided = false;
         Debug.Log("end coroutine");
 
-        // Vector2 input;
-        // GetDirectionInput(out input);
-        // if(input.magnitude == 0)
-        //     animator.SetBool("Moving", false);
+        Vector2 input;
+        GetDirectionInput(out input);
+        if(input.magnitude == 0)
+            animator.SetBool("Moving", false);
 
-
-        Vector2 p = transform.position;
-        switch (lastDirection)
+        if(true)
         {
-            case Direction.Up:
-                p.y = Mathf.Round(position.y);
-                break;
-            case Direction.Right:
-                p.x = Mathf.Round(position.x);
-                break;
-            case Direction.Down:
-                p.y = Mathf.Round(position.y);
-                break;
-            default:
-                p.x = Mathf.Round(position.x);
-                break;
-        }
+            Vector2 p = transform.position;
+            switch (lastDirection)
+            {
+                case Direction.Up:
+                    p.y = Mathf.Round(position.y);
+                    break;
+                case Direction.Right:
+                    p.x = Mathf.Round(position.x);
+                    break;
+                case Direction.Down:
+                    p.y = Mathf.Round(position.y);
+                    break;
+                default:
+                    p.x = Mathf.Round(position.x);
+                    break;
+            }
         transform.position = p;
+        }
     }
 
     Direction GetDirectionInput(out Vector2 input)
@@ -133,20 +135,24 @@ public class GoldController : MonoBehaviour
         get { return rigidbody.position; }
     }
 
-    public bool transient
-    {
-        // TODO: write transient function
-        get { return false; }
-    }
-
     public void teleport(Vector2 dest)
     {
         transform.position = dest;
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionStay2D(Collision2D other)
     {
-        collided = true;
-        animator.SetBool("Moving", false);
+        Debug.Log("Collision Enter");
+        if(!isMoving)
+        {
+            collided = true;
+            isMoving = false;
+            //animator.SetBool("Moving", false);
+        }
+    }
+    void OnCollisionExit2D(Collision2D other)
+    {
+        Debug.Log("Collision Exit");
+        collided = false;
     }
 }
