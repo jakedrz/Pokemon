@@ -96,7 +96,7 @@ public class GoldController : MonoBehaviour
                     p.x = Mathf.Round(position.x);
                     break;
             }
-        transform.position = p;
+        rigidbody.MovePosition(p);
         }
     }
 
