@@ -41,7 +41,7 @@ public class GoldController : MonoBehaviour
         Vector2 input;
         currentDirection = GetDirectionInput(out input);
         //if input
-        if (!Mathf.Approximately(input.magnitude, 0) && isMoving == false)
+        if (!Mathf.Approximately(input.magnitude, 0))
         {
             lastPosition = rigidbody.position;
             lastDirection = currentDirection;
@@ -61,17 +61,21 @@ public class GoldController : MonoBehaviour
     IEnumerator Move(Vector2 velocity)
     {
         //rigidbody.MovePosition(move);
-        while (((lastPosition - rigidbody.position).magnitude < 1 - (1f / (PPU * 2))) && collided == false)
+        //                     moving distance is less than 1
+        while (((lastPosition - rigidbody.position).magnitude < 1 - (1f / (PPU * 2))))
         {
+            if(collided)
+            {
+                collided = false;
+                break;
+            }
             rigidbody.MovePosition(
-                //Vector2.MoveTowards(rigidbody.position, toPosition, speed * Time.fixedDeltaTime)
                 rigidbody.position + velocity * speed * Time.fixedDeltaTime
             );
+            
             yield return null;
         }
-        //transform.position = toPosition;
         isMoving = false;
-        Debug.Log("end coroutine");
 
         Vector2 input;
         GetDirectionInput(out input);
@@ -81,22 +85,24 @@ public class GoldController : MonoBehaviour
         if(true)
         {
             Vector2 p = transform.position;
-            switch (lastDirection)
-            {
-                case Direction.Up:
-                    p.y = Mathf.Round(position.y);
-                    break;
-                case Direction.Right:
-                    p.x = Mathf.Round(position.x);
-                    break;
-                case Direction.Down:
-                    p.y = Mathf.Round(position.y);
-                    break;
-                default:
-                    p.x = Mathf.Round(position.x);
-                    break;
-            }
-        rigidbody.MovePosition(p);
+            // switch (lastDirection)
+            // {
+            //     case Direction.Up:
+            //         p.y = Mathf.Round(position.y);
+            //         break;
+            //     case Direction.Right:
+            //         p.x = Mathf.Round(position.x);
+            //         break;
+            //     case Direction.Down:
+            //         p.y = Mathf.Round(position.y);
+            //         break;
+            //     default:
+            //         p.x = Mathf.Round(position.x);
+            //         break;
+            // }
+            p.x = Mathf.Round(position.x);
+            p.y = Mathf.Round(position.y);
+            rigidbody.MovePosition(p);
         }
     }
 
@@ -142,17 +148,10 @@ public class GoldController : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D other)
     {
-        Debug.Log("Collision Enter");
-        if(!isMoving)
-        {
-            collided = true;
-            isMoving = false;
-            //animator.SetBool("Moving", false);
-        }
+        collided = true;
     }
     void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log("Collision Exit");
         collided = false;
     }
 }
