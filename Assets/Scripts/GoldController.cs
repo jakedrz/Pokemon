@@ -52,23 +52,26 @@ public class GoldController : MonoBehaviour
             animator.SetFloat("Move Y", input.y);
             StartCoroutine(Move(velocity));
         }
+        else if(!isMoving)
+        {
+            animator.SetBool("Moving", false);
+        }
     }
 
     IEnumerator Move(Vector2 velocity)
     {
         //rigidbody.MovePosition(move);
         //                     moving distance is less than 1
-        while (((lastPosition - rigidbody.position).magnitude < 1 - (1f / (PPU * 2))))
+        //while (((lastPosition - rigidbody.position).magnitude < 1 - (1f / (PPU * 2))))
+        while ((lastPosition - rigidbody.position).magnitude < 1)
         {
             if (!collided)
             {
-                // transform.position = new Vector3(transform.position.x + velocity.x * speed * Time.deltaTime, transform.position.y + velocity.y * speed * Time.deltaTime, 0);
                 rigidbody.MovePosition(rigidbody.position + velocity * speed * Time.fixedDeltaTime);
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
             else
             {
-                collided = false;
                 break;
             }
         }
@@ -103,7 +106,6 @@ public class GoldController : MonoBehaviour
             rigidbody.MovePosition(p);
         }
         isMoving = false;
-        Debug.Log("isMoving = false");
     }
 
     Direction GetDirectionInput(out Vector2 input)
@@ -155,7 +157,7 @@ public class GoldController : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log("collided = false");
+        Debug.Log("exit: collided = false");
         collided = false;
     }
 }
