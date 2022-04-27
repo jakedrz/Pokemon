@@ -60,30 +60,25 @@ public class GoldController : MonoBehaviour
 
     IEnumerator Move(Vector2 velocity)
     {
-        //rigidbody.MovePosition(move);
-        //                     moving distance is less than 1
-        //while (((lastPosition - rigidbody.position).magnitude < 1 - (1f / (PPU * 2))))
-        while ((lastPosition - rigidbody.position).magnitude < 1)
-        {
-            if (!collided)
-            {
-                rigidbody.MovePosition(rigidbody.position + velocity * speed * Time.fixedDeltaTime);
-                yield return new WaitForFixedUpdate();
-            }
-            else
-            {
-                break;
-            }
+        //keep moving until approximately 1 square away
+        rigidbody.velocity = velocity * speed;
+        while (((lastPosition - rigidbody.position).magnitude < 1) && !collided)
+        { 
+            yield return null;
         }
         
+        if(collided)
+            rigidbody.velocity = new Vector3(0, 0, 0);
 
         Vector2 input;
         GetDirectionInput(out input);
+        //if input is none
         if (input.magnitude == 0)
-            animator.SetBool("Moving", false);
-
-        if (true)
         {
+            //stop animating and stop moving
+            animator.SetBool("Moving", false);
+            rigidbody.velocity = new Vector3(0, 0, 0);
+       
             Vector2 p = transform.position;
             // switch (lastDirection)
             // {
@@ -103,7 +98,7 @@ public class GoldController : MonoBehaviour
             Debug.Log(rigidbody.position);
             p.x = Mathf.Round(position.x);
             p.y = Mathf.Round(position.y);
-            rigidbody.MovePosition(p);
+            //rigidbody.MovePosition(p);
         }
         isMoving = false;
     }
