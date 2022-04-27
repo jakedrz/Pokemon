@@ -20,11 +20,8 @@ public class Teleporter : MonoBehaviour
         GoldController goldController = other.GetComponent<GoldController>();
         if(goldController != null)
         {
-            if(!goldController.transient)
-            {
-                
-                goldController.teleport(new Vector2(destination.transform.position.x, destination.transform.position.y));
-            }
+
+            goldController.teleport(new Vector2(destination.transform.position.x, destination.transform.position.y));
         }
     }
 }
