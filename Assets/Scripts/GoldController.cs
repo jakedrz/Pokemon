@@ -43,7 +43,8 @@ public class GoldController : MonoBehaviour
         //if input
         if (!Mathf.Approximately(input.magnitude, 0) && !isMoving)
         {
-            lastPosition = rigidbody.position;
+            lastPosition.x = Mathf.Round(rigidbody.position.x);
+            lastPosition.y = Mathf.Round(rigidbody.position.y);
             lastDirection = currentDirection;
             isMoving = true;
             Vector2 velocity = new Vector2(input.x, input.y);
@@ -80,13 +81,6 @@ public class GoldController : MonoBehaviour
 
         Vector2 input;
         GetDirectionInput(out input);
-        //if input is none
-        if (input.magnitude == 0)
-        {
-            rigidbody.velocity = new Vector3(0, 0, 0);
-            //stop animating and stop moving
-            animator.SetBool("Moving", false);
-        }
         isMoving = false;
     }
 
