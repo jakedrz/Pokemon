@@ -92,13 +92,25 @@ public class NPCController : MonoBehaviour
             {
                 if(timespan >= pauseTime)
                 {
-                    moving = true;
-                    if(Mathf.Approximately(Mathf.Round(origin.x), Mathf.Round(rigidbody.position.x)) && Mathf.Approximately(Mathf.Round(origin.y), Mathf.Round(rigidbody.position.y)))
+                    //Debug.Log("timespan: " + timespan + " pauseTime: " + pauseTime);
+                    if(stride != 0)
                     {
-                        leaving = true;
+                        moving = true;
+                        if(Mathf.Approximately(Mathf.Round(origin.x), Mathf.Round(rigidbody.position.x)) && Mathf.Approximately(Mathf.Round(origin.y), Mathf.Round(rigidbody.position.y)))
+                        {
+                            leaving = true;
+                        }
+                        else
+                            leaving = false;
                     }
                     else
-                        leaving = false;
+                    { 
+                        Direction dir = (Direction)Random.Range(0, 3);
+                        look(dir);
+                        Debug.Log(dir);
+                        pauseTime = Random.Range(pauseMinimum, pauseMaximum);
+                        lastTime = Time.fixedTime;
+                    }
                 }
             }
         }
@@ -106,12 +118,15 @@ public class NPCController : MonoBehaviour
 
     public void look(Direction direction)
     {
+        //animator.SetBool("Moving", true);
         switch(direction)
         {
             case Direction.Up:
+                Debug.Log("animator set move y 1");
                 animator.SetFloat("Move Y", 1f);
                 break;
             case Direction.Right:
+                Debug.Log("animator set move x 1");
                 animator.SetFloat("Move X", 1f);
                 break;
             case Direction.Down:
@@ -121,8 +136,8 @@ public class NPCController : MonoBehaviour
                 animator.SetFloat("Move X", -1f);
                 break;
         }
-        animator.SetBool("Moving", true);
-        animator.SetBool("Moving", false);
+        // animator.SetBool("Moving", true);
+        // animator.SetBool("Moving", false);
     }
 
     public Vector2 position
