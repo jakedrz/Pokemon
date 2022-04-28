@@ -643,6 +643,10 @@ PrefabInstance:
       propertyPath: pauseMinimum
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6223954055361016220, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 57f2b35f9c7ee3f4cb77b63ae7131b87, type: 2}
     - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_Name
       value: Motherly
@@ -1239,6 +1243,10 @@ PrefabInstance:
       propertyPath: direction
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6223954055361016220, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5b9ea2bfc80f14c4dab648ad682a5c34, type: 2}
     - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_Name
       value: Professor Elm
@@ -28687,6 +28695,10 @@ PrefabInstance:
       propertyPath: pauseMinimum
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6223954055361016220, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2bc2426e1454ce142b37592e0fc3d2e6, type: 2}
     - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_Name
       value: Child
@@ -29203,6 +29215,10 @@ PrefabInstance:
       propertyPath: wander
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6223954055361016220, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5b9ea2bfc80f14c4dab648ad682a5c34, type: 2}
     - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_Name
       value: Scientist
@@ -29389,6 +29405,10 @@ PrefabInstance:
       propertyPath: pauseMinimum
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6223954055361016220, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 57f2b35f9c7ee3f4cb77b63ae7131b87, type: 2}
     - target: {fileID: 6223954055361016221, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: m_Name
       value: Tubs
