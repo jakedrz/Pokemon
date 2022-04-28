@@ -122,11 +122,9 @@ public class NPCController : MonoBehaviour
         switch(direction)
         {
             case Direction.Up:
-                Debug.Log("animator set move y 1");
                 animator.SetFloat("Move Y", 1f);
                 break;
             case Direction.Right:
-                Debug.Log("animator set move x 1");
                 animator.SetFloat("Move X", 1f);
                 break;
             case Direction.Down:
