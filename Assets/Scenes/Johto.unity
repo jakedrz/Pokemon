@@ -559,7 +559,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.03, y: 0, z: 0}
 --- !u!95 &519420033
 Animator:
   serializedVersion: 3
@@ -29562,7 +29562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 737594737535413615, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: pauseMaximum
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 737594737535413615, guid: 67be88b0ee4f90645957fdfc74a10c5f, type: 3}
       propertyPath: pauseMinimum

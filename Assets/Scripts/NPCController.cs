@@ -92,7 +92,6 @@ public class NPCController : MonoBehaviour
             {
                 if(timespan >= pauseTime)
                 {
-                    //Debug.Log("timespan: " + timespan + " pauseTime: " + pauseTime);
                     if(stride != 0)
                     {
                         moving = true;
@@ -105,9 +104,8 @@ public class NPCController : MonoBehaviour
                     }
                     else
                     { 
-                        Direction dir = (Direction)Random.Range(0, 3);
+                        Direction dir = (Direction)Random.Range(0, 4);
                         look(dir);
-                        Debug.Log(dir);
                         pauseTime = Random.Range(pauseMinimum, pauseMaximum);
                         lastTime = Time.fixedTime;
                     }
@@ -118,24 +116,25 @@ public class NPCController : MonoBehaviour
 
     public void look(Direction direction)
     {
-        //animator.SetBool("Moving", true);
         switch(direction)
         {
             case Direction.Up:
                 animator.SetFloat("Move Y", 1f);
+                animator.SetFloat("Move X", 0f);
                 break;
             case Direction.Right:
                 animator.SetFloat("Move X", 1f);
+                animator.SetFloat("Move Y", 0f);
                 break;
             case Direction.Down:
                 animator.SetFloat("Move Y", -1f);
+                animator.SetFloat("Move X", 0f);
                 break;
             case Direction.Left:
                 animator.SetFloat("Move X", -1f);
+                animator.SetFloat("Move Y", 0f);
                 break;
         }
-        // animator.SetBool("Moving", true);
-        // animator.SetBool("Moving", false);
     }
 
     public Vector2 position
