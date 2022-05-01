@@ -43,14 +43,10 @@ public class GoldController : MonoBehaviour
         //if input
         if (!Mathf.Approximately(input.magnitude, 0) && !isMoving)
         {
-            lastPosition.x = Mathf.Round(rigidbody.position.x);
-            lastPosition.y = Mathf.Round(rigidbody.position.y);
-            lastDirection = currentDirection;
             isMoving = true;
-            Vector2 velocity = new Vector2(input.x, input.y);
-            animator.SetBool("Moving", isMoving);
             animator.SetFloat("Move X", input.x);
             animator.SetFloat("Move Y", input.y);
+            Vector2 velocity = new Vector2(input.x, input.y);
             StartCoroutine(Move(velocity));
         }
         else if(!isMoving)
@@ -62,25 +58,33 @@ public class GoldController : MonoBehaviour
 
     IEnumerator Move(Vector2 velocity)
     {
-        //keep moving until approximately 1 square away
-        rigidbody.velocity = velocity * speed;
-        
-        while ((lastPosition - rigidbody.position).magnitude < 1)
-        {
-            if(collided)
-            {
-                break;
-            }
-            yield return new WaitForFixedUpdate();
-        }
-    
-        Vector2 p = transform.position;
-        p.x = Mathf.Round(position.x);
-        p.y = Mathf.Round(position.y);
-        rigidbody.MovePosition(p);
-
         Vector2 input;
+        yield return new WaitForSeconds(0.1f);
         GetDirectionInput(out input);
+        if(!Mathf.Approximately(input.magnitude, 0))
+        {
+            //Vector2 velocity = new Vector2(input.x, input.y);
+            animator.SetBool("Moving", isMoving);
+            animator.SetFloat("Move X", input.x);
+            animator.SetFloat("Move Y", input.y);
+            
+            //keep moving until approximately 1 square away
+            rigidbody.velocity = velocity * speed;
+            
+            while ((lastPosition - rigidbody.position).magnitude < 1)
+            {
+                if(collided)
+                {
+                    break;
+                }
+                yield return new WaitForFixedUpdate();
+            }
+        
+            Vector2 p = transform.position;
+            p.x = Mathf.Round(position.x);
+            p.y = Mathf.Round(position.y);
+            rigidbody.MovePosition(p);
+        }
         isMoving = false;
     }
 
