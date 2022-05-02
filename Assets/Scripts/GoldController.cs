@@ -59,10 +59,19 @@ public class GoldController : MonoBehaviour
     IEnumerator Move(Vector2 velocity)
     {
         Vector2 input;
-        yield return new WaitForSeconds(0.1f);
-        GetDirectionInput(out input);
+        currentDirection = GetDirectionInput(out input);
+        
+        
+        if(currentDirection != lastDirection)
+            yield return new WaitForSeconds(0.125f);
+        
+        lastDirection = currentDirection;
+
         if(!Mathf.Approximately(input.magnitude, 0))
         {
+            lastPosition.x = Mathf.Round(rigidbody.position.x);
+            lastPosition.y = Mathf.Round(rigidbody.position.y);
+            
             //Vector2 velocity = new Vector2(input.x, input.y);
             animator.SetBool("Moving", isMoving);
             animator.SetFloat("Move X", input.x);
