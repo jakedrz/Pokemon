@@ -9,7 +9,7 @@ public class GoldController : MonoBehaviour
         vertical;
     Rigidbody2D rigidbody;
 
-    enum Direction
+    public enum Direction
     {
         Up,
         Right,
@@ -44,8 +44,6 @@ public class GoldController : MonoBehaviour
         if (!Mathf.Approximately(input.magnitude, 0) && !isMoving)
         {
             isMoving = true;
-            animator.SetFloat("Move X", input.x);
-            animator.SetFloat("Move Y", input.y);
             Vector2 velocity = new Vector2(input.x, input.y);
             StartCoroutine(Move(velocity));
         }
@@ -60,7 +58,8 @@ public class GoldController : MonoBehaviour
     {
         Vector2 input;
         currentDirection = GetDirectionInput(out input);
-        
+        look(currentDirection);
+        Debug.Log(lastDirection);
         
         if(currentDirection != lastDirection)
             yield return new WaitForSeconds(0.125f);
@@ -145,5 +144,28 @@ public class GoldController : MonoBehaviour
     void OnCollisionExit2D(Collision2D other)
     {
         collided = false;
+    }
+
+    public void look(Direction direction)
+    {
+        switch(direction)
+        {
+            case Direction.Up:
+                animator.SetFloat("Move Y", 1f);
+                animator.SetFloat("Move X", 0f);
+                break;
+            case Direction.Right:
+                animator.SetFloat("Move X", 1f);
+                animator.SetFloat("Move Y", 0f);
+                break;
+            case Direction.Down:
+                animator.SetFloat("Move Y", -1f);
+                animator.SetFloat("Move X", 0f);
+                break;
+            case Direction.Left:
+                animator.SetFloat("Move X", -1f);
+                animator.SetFloat("Move Y", 0f);
+                break;
+        }
     }
 }
