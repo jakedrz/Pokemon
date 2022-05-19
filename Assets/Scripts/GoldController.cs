@@ -17,12 +17,13 @@ public class GoldController : MonoBehaviour
         Left
     };
 
-    Direction lastDirection,
-        currentDirection;
+    Direction lastDirection;
+    Direction currentDirection = Direction.Left;
     Vector2 lastPosition;
     string stringDirection;
     bool isMoving = false;
     bool collided = false;
+    bool fromRest = true;
     Vector2 directionConstrainer;
 
     public float speed = 3f;
@@ -51,6 +52,7 @@ public class GoldController : MonoBehaviour
         {
             animator.SetBool("Moving", isMoving);
             rigidbody.velocity = new Vector3(0, 0, 0);
+            fromRest = true;
         }
     }
 
@@ -59,15 +61,18 @@ public class GoldController : MonoBehaviour
         Vector2 input;
         currentDirection = GetDirectionInput(out input);
         look(currentDirection);
-        Debug.Log(lastDirection);
         
-        if(currentDirection != lastDirection)
-            yield return new WaitForSeconds(0.125f);
-        
-        lastDirection = currentDirection;
-
-        if(!Mathf.Approximately(input.magnitude, 0))
+        if(currentDirection != lastDirection && fromRest)
         {
+            Debug.Log("waiting" + Time.time + currentDirection);
+            yield return new WaitForSeconds(0.125f);
+            GetDirectionInput(out input);
+        }
+        
+        
+        if(!Mathf.Approximately(input.magnitude, 0) && lastDirection == currentDirection)
+        {
+            fromRest = false;
             lastPosition.x = Mathf.Round(rigidbody.position.x);
             lastPosition.y = Mathf.Round(rigidbody.position.y);
             
@@ -93,6 +98,7 @@ public class GoldController : MonoBehaviour
             p.y = Mathf.Round(position.y);
             rigidbody.MovePosition(p);
         }
+        lastDirection = currentDirection;
         isMoving = false;
     }
 
@@ -123,6 +129,8 @@ public class GoldController : MonoBehaviour
             direction = Direction.Up;
             input.x = 0;
         }
+        input.x = Mathf.RoundToInt(input.x);
+        input.y = Mathf.RoundToInt(input.y);
         return direction;
     }
 
