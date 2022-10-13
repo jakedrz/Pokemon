@@ -17,8 +17,7 @@ public class GoldController : MonoBehaviour
         Left
     };
 
-    Direction lastDirection;
-    Direction currentDirection = Direction.Left;
+    Vector2 lastDirection;
     Vector2 lastPosition;
     string stringDirection;
     bool isMoving = false;
@@ -40,7 +39,7 @@ public class GoldController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 input;
-        currentDirection = GetDirectionInput(out input);
+        GetDirectionalInput(out input);
         //if input
         if (!Mathf.Approximately(input.magnitude, 0) && !isMoving)
         {
@@ -58,19 +57,22 @@ public class GoldController : MonoBehaviour
 
     IEnumerator Move(Vector2 velocity)
     {
-        Vector2 input;
-        currentDirection = GetDirectionInput(out input);
-        look(currentDirection);
-        
-        if(currentDirection != lastDirection && fromRest)
+        Vector2 input = new Vector2(0, 0);
+        look(GetDirectionalVelocity(velocity));
+
+        /* if currentDirection has changed and gold is moving from rest,
+        make gold look in new direction, wait,
+        then check to see if input is still pressed*/
+        if((velocity != lastDirection) && fromRest)
         {
-            Debug.Log("waiting" + Time.time + currentDirection);
             yield return new WaitForSeconds(0.125f);
-            GetDirectionInput(out input);
+            lastDirection = velocity;
         }
         
-        
-        if(!Mathf.Approximately(input.magnitude, 0) && lastDirection == currentDirection)
+        /* if there's input and the currentDirection is the same as the lastDirection,
+           move gold */
+        GetDirectionalInput(out input);
+        if((!Mathf.Approximately(input.magnitude, 0)) && (velocity == input))
         {
             fromRest = false;
             lastPosition.x = Mathf.Round(rigidbody.position.x);
@@ -98,11 +100,10 @@ public class GoldController : MonoBehaviour
             p.y = Mathf.Round(position.y);
             rigidbody.MovePosition(p);
         }
-        lastDirection = currentDirection;
         isMoving = false;
     }
 
-    Direction GetDirectionInput(out Vector2 input)
+    Direction GetDirectionalInput(out Vector2 input)
     {
         Direction direction;
         horizontal = Input.GetAxis("Horizontal");
@@ -131,6 +132,28 @@ public class GoldController : MonoBehaviour
         }
         input.x = Mathf.RoundToInt(input.x);
         input.y = Mathf.RoundToInt(input.y);
+        return direction;
+    }
+    Direction GetDirectionalVelocity(Vector2 velocity)
+    {
+        Direction direction;
+        float angle = Vector2.SignedAngle(Vector2.up, velocity);
+        if ((45f <= angle) && (angle < 135f))
+        {
+            direction = Direction.Left;
+        }
+        else if ((135f <= angle) && (angle > -135f))
+        {
+            direction = Direction.Down;
+        }
+        else if ((-135f <= angle) && (angle < -45f))
+        {
+            direction = Direction.Right;
+        }
+        else
+        {
+            direction = Direction.Up;
+        }
         return direction;
     }
 
