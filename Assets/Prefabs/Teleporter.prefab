@@ -102,3 +102,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1726063067635108058}
+  fader: {fileID: 3927841763110894053, guid: 577217dbd311e904493954a93c792d75, type: 3}
